@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Aluguel - Mesas e Cadeiras</title>
+    <title>AluguelPro - Aluguel de Mesas e Cadeiras</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
@@ -39,392 +40,440 @@
             background-image:
                 radial-gradient(ellipse at 20% 0%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
         /* Header */
         header {
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 15, 28, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(45, 58, 82, 0.5);
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 0;
-            margin-bottom: 32px;
-            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: -0.5px;
         }
 
         .logo span {
-            color: var(--accent-blue);
+            color: var(--accent-blue-dark);
         }
 
-        /* Stats Cards */
-        .stats-grid {
+        nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue-dark);
+        }
+
+        .btn-cta {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(225, 225, 225, 0.165);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Catalog Section */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 48px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-blue);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .stat-card {
+        .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .product-image {
+            height: 250px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--text-muted);
             position: relative;
             overflow: hidden;
         }
 
-        .stat-card::before {
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 24px;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-teal);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .product-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        /* Order Form Section */
+        .order-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
         }
 
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-value {
-            font-family: 'Space Mono', monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .stat-value.orange {
-            color: var(--accent-blue);
-        }
-
-        .stat-value.teal {
-            color: var(--accent-teal);
-        }
-
-        .stat-value.success {
-            color: var(--success);
-        }
-
-        /* Main Layout */
-        .main-grid {
+        .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Form Section */
-        .form-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: var(--accent-blue);
-            border-radius: 2px;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
             margin-bottom: 8px;
+            color: var(--text-secondary);
             font-weight: 500;
         }
 
         .form-group input,
+        .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--text-primary);
             font-family: inherit;
             font-size: 1rem;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
         .form-group input:focus,
+        .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--accent-blue);
             box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
         }
 
-        .form-group input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
+        .qty-selector {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
-            color: white;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-secondary {
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            border: 1px solid var(--border);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .btn-secondary:hover {
-            background: var(--border);
+        .qty-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
         }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-            padding: 8px 16px;
-            font-size: 0.85rem;
+        .qty-input {
+            width: 60px !important;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
         }
 
-        .btn-success {
-            background: var(--success);
-            color: white;
-            padding: 8px 16px;
-            font-size: 0.85rem;
+        /* Order Summary */
+        .order-summary {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
         }
 
-        /* Table Section */
-        .table-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-            overflow: hidden;
+        .summary-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .table-header {
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .summary-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 16px;
         }
 
-        .search-box {
+        .total-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .total-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-blue-dark);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(35, 107, 232, 0.3);
+        }
+
+        /* How it Works */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .step-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 16px;
-            flex: 1;
-            max-width: 300px;
         }
 
-        .search-box input {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.95rem;
-            width: 100%;
-        }
-
-        .search-box input:focus {
-            outline: none;
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-        }
-
-        .filter-tab {
-            padding: 8px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .filter-tab:hover,
-        .filter-tab.active {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: white;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            margin: 0 -28px;
-            padding: 0 28px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 700px;
-        }
-
-        th {
-            text-align: left;
-            padding: 14px 16px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        td {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        tr:hover {
-            background: rgba(255, 107, 53, 0.03);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-badge.alugado {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-        }
-
-        .status-badge.devolvido {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-        }
-
-        .status-badge.atrasado {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--danger);
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .item-count {
-            font-family: 'Space Mono', monospace;
-            color: var(--accent-teal);
-        }
-
-        .empty-state {
+        .copyright {
             text-align: center;
-            padding: 60px 20px;
             color: var(--text-muted);
-        }
-
-        .empty-state svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .empty-state h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
         }
 
         /* Modal */
@@ -434,7 +483,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -442,6 +491,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .modal-overlay.active {
@@ -452,728 +502,457 @@
         .modal {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
+            border-radius: 24px;
+            padding: 40px;
             width: 90%;
             max-width: 500px;
             transform: scale(0.9);
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .modal-overlay.active .modal {
             transform: scale(1);
         }
 
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .modal-buttons .btn {
-            flex: 1;
-        }
-
-        /* Inventory Config */
-        .inventory-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-            margin-top: 24px;
-        }
-
-        .inventory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-
-        .inventory-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .inventory-item label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .inventory-controls {
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            font-size: 2.5rem;
+            margin: 0 auto 24px;
         }
 
-        .inventory-controls button {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .inventory-controls button:hover {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-        }
-
-        .inventory-controls span {
+        .pix-key {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px dashed var(--border);
             font-family: 'Space Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-            min-width: 50px;
+            margin: 20px 0;
+            word-break: break-all;
+            user-select: all;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-        }
-
-        .tooltip::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 6px 12px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-        }
-
-        .tooltip:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
+            .hero h2 {
+                font-size: 2.5rem;
             }
 
-            .table-header {
-                flex-direction: column;
-                align-items: stretch;
+            .form-grid {
+                grid-template-columns: 1fr;
             }
 
-            .search-box {
-                max-width: none;
+            .order-summary {
+                position: static;
+                margin-top: 40px;
             }
 
-            .filter-tabs {
-                overflow-x: auto;
-                padding-bottom: 8px;
+            nav ul {
+                display: none;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="stat-card fade-in">
-            <div class="stat-label">Aluguéis Ativos</div>
-            <div class="stat-value orange" id="statAtivos">0</div>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">🪑</div>
+                <h1>Aluguel<span>Pro</span></h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#como-funciona">Como Funciona</a></li>
+                </ul>
+            </nav>
+            <a href="#pedido" class="btn-cta">Fazer Pedido</a>
         </div>
-        <div class="stat-card fade-in" style="animation-delay: 0.1s">
-            <div class="stat-label">Conjuntos Disponíveis</div>
-            <div class="stat-value teal" id="statDisponiveis">0</div>
-        </div>
-        <div class="stat-card fade-in" style="animation-delay: 0.2s">
-            <div class="stat-label">Faturamento do Mês</div>
-            <div class="stat-value success" id="statFaturamento">R$ 0</div>
-        </div>
-        <div class="stat-card fade-in" style="animation-delay: 0.3s">
-            <div class="stat-label">Total de Aluguéis</div>
-            <div class="stat-value" id="statTotal">0</div>
-        </div>
-    </div>
+    </header>
 
-    <!-- Settings Section (Hidden by default) -->
-    <div id="settingsSection" class="form-section fade-in"
-        style="display: none; margin-bottom: 32px; border-color: var(--accent-teal);">
-        <h2 class="section-title" style="color: var(--accent-teal);">⚙️ Configurações do Sistema</h2>
-        <form id="configForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Preço da Mesa (R$)</label>
-                    <input type="number" id="configPriceTable" step="0.01" required>
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div>
+                <h2>Transforme seu evento<br>com conforto e estilo</h2>
+                <p>Aluguel de mesas e cadeiras de alta qualidade para festas, casamentos e eventos. Entrega
+                    rápida e pontual.</p>
+                <a href="#pedido" class="btn-cta" style="padding: 16px 32px; font-size: 1.1rem;">
+                    Reservar Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="produtos" class="container">
+        <h2 class="section-title">Nossos Produtos</h2>
+        <div class="products-grid">
+            <!-- Combo Simples -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="combo-simples.jpg" alt="Combo Simples - 1 mesa e 4 cadeiras">
                 </div>
-                <div class="form-group">
-                    <label>Preço da Cadeira (R$)</label>
-                    <input type="number" id="configPriceChair" step="0.01" required>
+                <div class="product-content">
+                    <h3 class="product-title">Combo Simples</h3>
+                    <div class="product-price" id="price-combo-simples">R$ 35,00</div>
+                    <p class="product-desc">Conjunto completo com 1 mesa e 4 cadeiras. Perfeito para pequenas reuniões e
+                        eventos íntimos.</p>
+                    <button class="btn-cta" style="width: 100%;" onclick="setCombo(1, 4)">
+                        Selecionar Combo
+                    </button>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Cole
-                    a mensagem do WhatsApp aqui:</label>
-                    <textarea id="importText" rows="6"
-                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; margin-bottom: 12px;"></textarea>
-                    <button type="button" class="btn btn-primary" onclick="processImport()"
-                        style="width: 100%;">Processar
-                        Texto</button>
+
+            <!-- Kit Festa -->
+            <div class="product-card" style="border-color: var(--accent-blue);">
+                <div class="product-image">
+                    <img src="kit-festa.jpg" alt="Kit Festa - 10 mesas e 40 cadeiras">
                 </div>
-                <form id="rentalForm">
+                <div class="product-content">
+                    <h3 class="product-title">Kit Festa 40 Convidados</h3>
+                    <div class="product-price" id="price-combo-festa">R$ 350,00</div>
+                    <p class="product-desc">Pacote completo com 10 mesas e 40 cadeiras. A solução ideal para festas e
+                        eventos de médio porte.</p>
+                    <button class="btn-cta" style="width: 100%;" onclick="setCombo(10, 40)">
+                        Selecionar Pacote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="como-funciona" class="container"
+        style="background: var(--bg-card); border-radius: 24px; padding: 60px 40px; margin-bottom: 80px;">
+        <h2 class="section-title" style="margin-top: 0;">Como Funciona</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">1️⃣</div>
+                <h3 class="step-title">Escolha os Itens</h3>
+                <p class="step-desc">Selecione a quantidade de mesas e cadeiras que você precisa.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">2️⃣</div>
+                <h3 class="step-title">Preencha os Dados</h3>
+                <p class="step-desc">Informe a data do evento e o endereço de entrega.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">3️⃣</div>
+                <h3 class="step-title">Pagamento PIX</h3>
+                <p class="step-desc">Faça o pagamento usando a chave PIX informada.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">4️⃣</div>
+                <h3 class="step-title">Envie no WhatsApp</h3>
+                <p class="step-desc">Confirme seu pedido e envie o comprovante.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pedido" class="container">
+        <div class="order-section">
+            <h2 class="section-title">Faça seu Pedido</h2>
+            <form id="orderForm" class="form-grid">
+                <div class="form-inputs">
                     <div class="form-group">
-                        <label>Nome do Cliente *</label>
-                        <input type="text" id="clientName" placeholder="Ex: João Silva" required>
+                        <label>Nome Completo *</label>
+                        <input type="text" id="clientName" required placeholder="Seu nome">
                     </div>
                     <div class="form-group">
-                        <label>Telefone *</label>
-                        <input type="tel" id="clientPhone" placeholder="(00) 00000-0000" required>
+                        <label>WhatsApp *</label>
+                        <input type="tel" id="clientPhone" required placeholder="(00) 00000-0000">
                     </div>
                     <div class="form-group">
-                        <label>Endereço de Entrega</label>
-                        <input type="text" id="clientAddress" placeholder="Rua, número, bairro">
+                        <label>Endereço de Entrega *</label>
+                        <input type="text" id="clientAddress" required placeholder="Rua, número, bairro, cidade">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Qtd. Mesas</label>
-                            <input type="number" id="tableQty" min="0" value="0">
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <label>Data do Evento *</label>
+                            <input type="date" id="eventDate" required>
                         </div>
-                        <div class="form-group">
-                            <label>Qtd. Cadeiras</label>
-                            <input type="number" id="chairQty" min="0" value="0">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Data de Retirada *</label>
-                            <input type="date" id="startDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Data de Devolução *</label>
-                            <input type="date" id="endDate" required>
+                        <div>
+                            <label>Horário de Entrega</label>
+                            <input type="time" id="deliveryTime" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Valor Total (R$)</label>
-                            <input type="number" id="totalValue" min="0" step="0.01" placeholder="0,00">
-                        </div>
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select id="status">
-                                <option value="alugado">Alugado</option>
-                                <option value="devolvido">Devolvido</option>
-                            </select>
+
+                    <div class="form-group">
+                        <label>Itens do Pedido</label>
+                        <div
+                            style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <span>Mesas</span>
+                                <div class="qty-selector">
+                                    <button type="button" class="qty-btn" onclick="updateQty('table', -1)">-</button>
+                                    <input type="text" id="qtyTable" class="qty-input" value="0" readonly>
+                                    <button type="button" class="qty-btn" onclick="updateQty('table', 1)">+</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Cadeiras</span>
+                                <div class="qty-selector">
+                                    <button type="button" class="qty-btn" onclick="updateQty('chair', -1)">-</button>
+                                    <input type="text" id="qtyChair" class="qty-input" value="0" readonly>
+                                    <button type="button" class="qty-btn" onclick="updateQty('chair', 1)">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Observações</label>
-                        <input type="text" id="notes" placeholder="Anotações adicionais...">
+                        <textarea id="notes" rows="3"
+                            placeholder="Ponto de referência ou instruções especiais..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        ✓ Registrar Aluguel
+                </div>
+
+                <div class="order-summary">
+                    <h3 class="summary-title">Resumo do Pedido</h3>
+                    <div class="summary-row">
+                        <span id="summary-tables">0 mesas</span>
+                        <span id="total-tables">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span id="summary-chairs">0 cadeiras</span>
+                        <span id="total-chairs">R$ 0,00</span>
+                    </div>
+                    <div class="summary-total">
+                        <span class="total-label">Total</span>
+                        <span class="total-value" id="grand-total">R$ 0,00</span>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        Finalizar Pedido
                     </button>
-                </form>
-            </div>
-
-            <!-- Table -->
-            <div class="table-section fade-in" style="animation-delay: 0.2s">
-                <div class="table-header">
-                    <h2 class="section-title">Aluguéis</h2>
-                    <div class="search-box">
-                        <span>🔍</span>
-                        <input type="text" id="searchInput" placeholder="Buscar cliente...">
-                    </div>
-                </div>
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="all">Todos</button>
-                    <button class="filter-tab" data-filter="alugado">Ativos</button>
-                    <button class="filter-tab" data-filter="atrasado">Atrasados</button>
-                    <button class="filter-tab" data-filter="devolvido">Devolvidos</button>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Origem</th>
-                                <th>Cliente</th>
-                                <th>Itens</th>
-                                <th>Período</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rentalsTable">
-                        </tbody>
-                    </table>
-                    <div class="empty-state" id="emptyState" style="display: none;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="3" y="8" width="18" height="12" rx="2" />
-                            <path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2" />
-                        </svg>
-                        <h3>Nenhum aluguel encontrado</h3>
-                        <p>Registre seu primeiro aluguel usando o formulário</p>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-    <!-- Inventory -->
-    <div class="inventory-section fade-in" style="animation-delay: 0.3s">
-        <h2 class="section-title">Estoque Total</h2>
-        <div class="inventory-grid">
-            <div class="inventory-item">
-                <label>Mesas no Estoque</label>
-                <div class="inventory-controls">
-                    <button onclick="updateInventory('tables', -1)">−</button>
-                    <span id="totalTables">20</span>
-                    <button onclick="updateInventory('tables', 1)">+</button>
-                </div>
-            </div>
-            <div class="inventory-item">
-                <label>Cadeiras no Estoque</label>
-                <div class="inventory-controls">
-                    <button onclick="updateInventory('chairs', -1)">−</button>
-                    <span id="totalChairs">80</span>
-                    <button onclick="updateInventory('chairs', 1)">+</button>
-                </div>
-            </div>
-            <div class="inventory-item">
-                <label>Mesas Alugadas</label>
-                <div class="inventory-controls">
-                    <span id="rentedTables" style="color: var(--warning)">0</span>
-                </div>
-            </div>
-            <div class="inventory-item">
-                <label>Cadeiras Alugadas</label>
-                <div class="inventory-controls">
-                    <span id="rentedChairs" style="color: var(--warning)">0</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal">
-            <h3 class="modal-title">Editar Aluguel</h3>
-            <form id="editForm">
-                <input type="hidden" id="editId">
-                <div class="form-group">
-                    <label>Nome do Cliente</label>
-                    <input type="text" id="editClientName" required>
-                </div>
-                <div class="form-group">
-                    <label>Telefone</label>
-                    <input type="tel" id="editClientPhone" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Qtd. Mesas</label>
-                        <input type="number" id="editTableQty" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Qtd. Cadeiras</label>
-                        <input type="number" id="editChairQty" min="0">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Data Retirada</label>
-                        <input type="date" id="editStartDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Data Devolução</label>
-                        <input type="date" id="editEndDate" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Valor (R$)</label>
-                        <input type="number" id="editTotalValue" min="0" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="editStatus">
-                            <option value="alugado">Alugado</option>
-                            <option value="devolvido">Devolvido</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <p style="text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                        Ao finalizar, você será redirecionado para o WhatsApp para confirmar o pagamento.
+                    </p>
                 </div>
             </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">🪑</div>
+                        <h1>Aluguel<span>Pro</span></h1>
+                    </div>
+                    <p>A melhor opção para o seu evento. Qualidade, pontualidade e preço justo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p>📱 <span id="footer-phone">(81) 99912-0970</span></p>
+                    <p> Atendemos na região de Olinda</p>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2024 AluguelPro. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-icon">✓</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 12px;">Pedido Pronto!</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                Para confirmar sua reserva, faça o pagamento via PIX e envie o comprovante no WhatsApp.
+            </p>
+
+            <div
+                style="text-align: left; background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>Valor Total:</span>
+                    <strong style="color: var(--accent-blue);" id="modal-total">R$ 0,00</strong>
+                </div>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Chave PIX:</p>
+            <div class="pix-key" id="modal-pix">chave@pix.com.br</div>
+
+            <button class="btn-submit" onclick="sendToWhatsApp()" style="background: #25D366;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.654-.698c.93.509 1.842.769 2.806.769 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.768-5.767-5.768zm0 11.761c-.873 0-1.676-.233-2.525-.734l-1.806.475.483-1.767c-.573-.894-.875-1.854-.875-2.969.001-3.303 2.687-5.989 5.989-5.989 3.303 0 5.989 2.686 5.989 5.989 0 3.303-2.687 5.989-5.989 5.989zm9.869-5.994c0-5.456-4.432-9.888-9.888-9.888-5.456 0-9.888 4.432-9.888 9.888 0 1.942.565 3.74 1.54 5.276l-2.663 9.729 9.954-2.613c1.503.923 3.243 1.496 5.057 1.496 5.456 0 9.888-4.432 9.888-9.888z">
+                    </path>
+                </svg>
+                Enviar no WhatsApp
+            </button>
+            <button onclick="closeModal()"
+                style="background: transparent; border: none; color: var(--text-muted); margin-top: 16px; cursor: pointer; text-decoration: underline;">
+                Voltar e editar
+            </button>
         </div>
     </div>
 
     <script>
-        // Data Management
+        // Configuration & State
         const STORAGE_KEY = 'aluguelPro_data';
-
-        let data = {
-            rentals: [],
-            inventory: {
-                tables: 20,
-                chairs: 80
-            },
-            prices: {
-                table: 15.00,
-                chair: 5.00
-            },
-            config: {
-                whatsapp: '',
-                pixKey: '',
-                welcomeMessage: ''
-            }
+        let config = {
+            prices: { table: 15.00, chair: 5.00 },
+            whatsapp: '5581999120970',
+            pixKey: 'chave@pix.com.br',
+            welcomeMessage: 'Olá! Gostaria de fazer um pedido de aluguel.'
         };
 
-        // Load data from localStorage
-        function loadData() {
+        let order = {
+            tables: 0,
+            chairs: 0
+        };
+
+        // Load Config
+        function loadConfig() {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                const parsed = JSON.parse(stored);
-                data = { ...data, ...parsed }; // Merge to ensure new fields exist
-
-                // Ensure deep merge for objects
-                if (parsed.inventory) data.inventory = { ...data.inventory, ...parsed.inventory };
-                if (parsed.prices) data.prices = { ...data.prices, ...parsed.prices };
-                if (parsed.config) data.config = { ...data.config, ...parsed.config };
+                const data = JSON.parse(stored);
+                if (data.config) {
+                    config.whatsapp = data.config.whatsapp || config.whatsapp;
+                    config.pixKey = data.config.pixKey || config.pixKey;
+                    config.welcomeMessage = data.config.welcomeMessage || config.welcomeMessage;
+                }
+                if (data.prices) {
+                    config.prices = data.prices;
+                }
             }
-            updateUI();
-            loadConfigForm();
+            updatePricesUI();
         }
 
-        // Save data to localStorage
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        function updatePricesUI() {
+            // Update Combo Prices
+            const comboSimplesPrice = (config.prices.table * 1) + (config.prices.chair * 4);
+            const comboFestaPrice = (config.prices.table * 10) + (config.prices.chair * 40);
+
+            document.getElementById('price-combo-simples').textContent = formatMoney(comboSimplesPrice);
+            document.getElementById('price-combo-festa').textContent = formatMoney(comboFestaPrice);
+
+            // Update Footer Phone
+            const phone = config.whatsapp.replace(/\D/g, '');
+            if (phone.length >= 11) {
+                document.getElementById('footer-phone').textContent = `(${phone.slice(0, 2)}) ${phone.slice(2, 7)}-${phone.slice(7)}`;
+            }
+
+            // Update Modal Pix
+            document.getElementById('modal-pix').textContent = config.pixKey;
         }
 
-        // Generate unique ID
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        function formatMoney(value) {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
-        // Format date
-        function formatDate(dateStr) {
-            const date = new Date(dateStr + 'T00:00:00');
-            return date.toLocaleDateString('pt-BR');
+        // Order Logic
+        function updateQty(type, delta) {
+            if (type === 'table') {
+                order.tables = Math.max(0, order.tables + delta);
+                document.getElementById('qtyTable').value = order.tables;
+            } else {
+                order.chairs = Math.max(0, order.chairs + delta);
+                document.getElementById('qtyChair').value = order.chairs;
+            }
+            calculateTotal();
         }
 
-        // Format currency
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
+        function setCombo(tables, chairs) {
+            order.tables = tables;
+            order.chairs = chairs;
+            document.getElementById('qtyTable').value = tables;
+            document.getElementById('qtyChair').value = chairs;
+            calculateTotal();
+            document.getElementById('pedido').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Check if rental is overdue
-        function isOverdue(rental) {
-            if (rental.status === 'devolvido') return false;
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const endDate = new Date(rental.endDate + 'T00:00:00');
-            return endDate < today;
+        function calculateTotal() {
+            const tableTotal = order.tables * config.prices.table;
+            const chairTotal = order.chairs * config.prices.chair;
+            const grandTotal = tableTotal + chairTotal;
+
+            document.getElementById('summary-tables').textContent = `${order.tables} mesas`;
+            document.getElementById('total-tables').textContent = formatMoney(tableTotal);
+
+            document.getElementById('summary-chairs').textContent = `${order.chairs} cadeiras`;
+            document.getElementById('total-chairs').textContent = formatMoney(chairTotal);
+
+            document.getElementById('grand-total').textContent = formatMoney(grandTotal);
+            document.getElementById('modal-total').textContent = formatMoney(grandTotal);
         }
 
-        // Get rental status
-        function getRentalStatus(rental) {
-            if (rental.status === 'devolvido') return 'devolvido';
-            if (isOverdue(rental)) return 'atrasado';
-            return 'alugado';
-        }
+        // Form Handling
+        document.getElementById('orderForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        // Calculate stats
-        function calculateStats() {
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-
-            let activeRentals = 0;
-            let monthRevenue = 0;
-            let rentedTables = 0;
-            let rentedChairs = 0;
-
-            data.rentals.forEach(rental => {
-                if (rental.status !== 'devolvido') {
-                    activeRentals++;
-                    rentedTables += rental.tableQty || 0;
-                    rentedChairs += rental.chairQty || 0;
-                }
-
-                const rentalDate = new Date(rental.startDate);
-                if (rentalDate.getMonth() === currentMonth &&
-                    rentalDate.getFullYear() === currentYear) {
-                    monthRevenue += rental.totalValue || 0;
-                }
-            });
-
-            const availableTables = data.inventory.tables - rentedTables;
-            const availableChairs = data.inventory.chairs - rentedChairs;
-
-            return {
-                activeRentals,
-                availableSets: Math.min(availableTables, Math.floor(availableChairs / 4)),
-                monthRevenue,
-                totalRentals: data.rentals.length,
-                rentedTables,
-                rentedChairs
-            };
-        }
-
-        // Update UI
-        function updateUI() {
-            const stats = calculateStats();
-
-            document.getElementById('statAtivos').textContent = stats.activeRentals;
-            document.getElementById('statDisponiveis').textContent = stats.availableSets;
-            document.getElementById('statFaturamento').textContent = formatCurrency(stats.monthRevenue);
-            document.getElementById('statTotal').textContent = stats.totalRentals;
-            document.getElementById('totalTables').textContent = data.inventory.tables;
-            document.getElementById('totalChairs').textContent = data.inventory.chairs;
-            document.getElementById('rentedTables').textContent = stats.rentedTables;
-            document.getElementById('rentedChairs').textContent = stats.rentedChairs;
-
-            renderTable();
-        }
-
-        // Render table
-        function renderTable(filter = 'all', search = '') {
-            const tbody = document.getElementById('rentalsTable');
-            const emptyState = document.getElementById('emptyState');
-
-            let filteredRentals = data.rentals.filter(rental => {
-                const status = getRentalStatus(rental);
-                const matchesFilter = filter === 'all' || status === filter;
-                const matchesSearch = rental.clientName.toLowerCase().includes(search.toLowerCase()) ||
-                    rental.clientPhone.includes(search);
-                return matchesFilter && matchesSearch;
-            });
-
-            // Sort by date (newest first)
-            filteredRentals.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-
-            if (filteredRentals.length === 0) {
-                tbody.innerHTML = '';
-                emptyState.style.display = 'block';
+            if (order.tables === 0 && order.chairs === 0) {
+                alert('Por favor, selecione pelo menos uma mesa ou cadeira.');
                 return;
             }
 
-            emptyState.style.display = 'none';
-            tbody.innerHTML = filteredRentals.map(rental => {
-                const status = getRentalStatus(rental);
-                const statusLabels = {
-                    'alugado': '⏳ Alugado',
-                    'devolvido': '✓ Devolvido',
-                    'atrasado': '⚠ Atrasado'
-                };
-
-                return `
-                    <tr>
-                        <td>
-                            ${rental.origin === 'web' ? '🌐 Web' : '👤 Manual'}
-                        </td>
-                        <td>
-                            <strong>${rental.clientName}</strong>
-                            <br><small style="color: var(--text-muted)">${rental.clientPhone}</small>
-                        </td>
-                        <td>
-                            <span class="item-count">${rental.tableQty || 0}</span> mesas
-                            <br>
-                            <span class="item-count">${rental.chairQty || 0}</span> cadeiras
-                        </td>
-                        <td>
-                            ${formatDate(rental.startDate)}
-                            <br><small style="color: var(--text-muted)">até ${formatDate(rental.endDate)}</small>
-                        </td>
-                        <td><strong>${formatCurrency(rental.totalValue || 0)}</strong></td>
-                        <td>
-                            <span class="status-badge ${status}">
-                                ${statusLabels[status]}
-                            </span>
-                        </td>
-                        <td>
-                            <div class="actions">
-                                ${status !== 'devolvido' ? `
-                                    <button class="btn btn-success" onclick="markReturned('${rental.id}')" title="Marcar como devolvido">
-                                        ✓
-                                    </button>
-                                ` : ''}
-                                <button class="btn btn-secondary" onclick="editRental('${rental.id}')" title="Editar">
-                                    ✎
-                                </button>
-                                <button class="btn btn-danger" onclick="deleteRental('${rental.id}')" title="Excluir">
-                                    ✕
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // Add rental
-        document.getElementById('rentalForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const rental = {
-                id: generateId(),
-                clientName: document.getElementById('clientName').value,
-                clientPhone: document.getElementById('clientPhone').value,
-                clientAddress: document.getElementById('clientAddress').value,
-                tableQty: parseInt(document.getElementById('tableQty').value) || 0,
-                chairQty: parseInt(document.getElementById('chairQty').value) || 0,
-                startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
-                totalValue: parseFloat(document.getElementById('totalValue').value) || 0,
-                status: document.getElementById('status').value,
-                notes: document.getElementById('notes').value,
-                origin: 'manual',
-                createdAt: new Date().toISOString()
-            };
-
-            data.rentals.push(rental);
-            saveData();
-            updateUI();
-            this.reset();
-
-            // Set default dates
-            document.getElementById('startDate').valueAsDate = new Date();
+            document.getElementById('confirmModal').classList.add('active');
         });
 
-        // Edit rental
-        function editRental(id) {
-            const rental = data.rentals.find(r => r.id === id);
-            if (!rental) return;
-
-            document.getElementById('editId').value = rental.id;
-            document.getElementById('editClientName').value = rental.clientName;
-            document.getElementById('editClientPhone').value = rental.clientPhone;
-            document.getElementById('editTableQty').value = rental.tableQty;
-            document.getElementById('editChairQty').value = rental.chairQty;
-            document.getElementById('editStartDate').value = rental.startDate;
-            document.getElementById('editEndDate').value = rental.endDate;
-            document.getElementById('editTotalValue').value = rental.totalValue;
-            document.getElementById('editStatus').value = rental.status;
-
-            document.getElementById('editModal').classList.add('active');
-        }
-
-        // Save edit
-        document.getElementById('editForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const id = document.getElementById('editId').value;
-            const index = data.rentals.findIndex(r => r.id === id);
-            if (index === -1) return;
-
-            data.rentals[index] = {
-                ...data.rentals[index],
-                clientName: document.getElementById('editClientName').value,
-                clientPhone: document.getElementById('editClientPhone').value,
-                tableQty: parseInt(document.getElementById('editTableQty').value) || 0,
-                chairQty: parseInt(document.getElementById('editChairQty').value) || 0,
-                startDate: document.getElementById('editStartDate').value,
-                endDate: document.getElementById('editEndDate').value,
-                totalValue: parseFloat(document.getElementById('editTotalValue').value) || 0,
-                status: document.getElementById('editStatus').value
-            };
-
-            saveData();
-            updateUI();
-            closeModal();
-        });
-
-        // Close modal
         function closeModal() {
-            document.getElementById('editModal').classList.remove('active');
+            document.getElementById('confirmModal').classList.remove('active');
         }
 
-        // Delete rental
-        function deleteRental(id) {
-            if (!confirm('Tem certeza que deseja excluir este aluguel?')) return;
+        function sendToWhatsApp() {
+            const name = document.getElementById('clientName').value;
+            const phone = document.getElementById('clientPhone').value;
+            const address = document.getElementById('clientAddress').value;
+            const date = document.getElementById('eventDate').value;
+            const time = document.getElementById('deliveryTime').value;
+            const notes = document.getElementById('notes').value;
 
-            data.rentals = data.rentals.filter(r => r.id !== id);
-            saveData();
-            updateUI();
+            const total = (order.tables * config.prices.table) + (order.chairs * config.prices.chair);
+            const formattedDate = new Date(date).toLocaleDateString('pt-BR');
+
+            const message = `
+=====================================
+   NOVO PEDIDO - AluguelPro
+=====================================
+
+DADOS DO CLIENTE:
+→ *Nome:* ${name}
+→ *Telefone:* ${phone}
+→ *Endereco:* ${address}
+
+DADOS DO EVENTO:
+→ *Data:* ${formattedDate}
+→ *Horario:* ${time}
+
+ITENS SOLICITADOS:
+→ *Mesas:* ${order.tables} unidades
+→ *Cadeiras:* ${order.chairs} unidades
+
+PAGAMENTO:
+→ *Valor Total:* ${formatMoney(total)}
+→ *Chave PIX:* ${config.pixKey}
+
+OBSERVACOES:
+${notes || 'Nenhuma'}
+
+---
+_Enviarei o comprovante de pagamento logo abaixo._
+`.trim();
+
+            const whatsappUrl = `https://wa.me/5581999120970?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closeModal();
         }
 
-        // Mark as returned
-        function markReturned(id) {
-            const index = data.rentals.findIndex(r => r.id === id);
-            if (index === -1) return;
+        // Date Picker Restrictions (Disable past dates)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('eventDate').min = today;
 
-            data.rentals[index].status = 'devolvido';
-            saveData();
-            updateUI();
-        }
-
-        // Update inventory
-        function updateInventory(type, delta) {
-            if (type === 'tables') {
-                data.inventory.tables = Math.max(0, data.inventory.tables + delta);
-            } else {
-                data.inventory.chairs = Math.max(0, data.inventory.chairs + delta);
-            }
-            saveData();
-            updateUI();
-        }
-
-        // Filter tabs
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', function () {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                renderTable(this.dataset.filter, document.getElementById('searchInput').value);
-            });
-        });
-
-        // Search
-        document.getElementById('searchInput').addEventListener('input', function () {
-            const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
-            renderTable(activeFilter, this.value);
-        });
-
-        // Phone mask
+        // Phone Mask
         document.getElementById('clientPhone').addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.slice(0, 11);
@@ -1189,103 +968,8 @@
             e.target.value = value;
         });
 
-        // Close modal on overlay click
-        document.getElementById('editModal').addEventListener('click', function (e) {
-            if (e.target === this) closeModal();
-        });
-
         // Initialize
-        loadData();
-
-        // Settings Toggle
-        function toggleSettings() {
-            const section = document.getElementById('settingsSection');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Load Config Form
-        function loadConfigForm() {
-            document.getElementById('configPriceTable').value = data.prices.table;
-            document.getElementById('configPriceChair').value = data.prices.chair;
-            document.getElementById('configWhatsapp').value = data.config.whatsapp;
-            document.getElementById('configPix').value = data.config.pixKey;
-            document.getElementById('configWelcome').value = data.config.welcomeMessage;
-        }
-
-        // Save Config
-        document.getElementById('configForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            data.prices.table = parseFloat(document.getElementById('configPriceTable').value) || 0;
-            data.prices.chair = parseFloat(document.getElementById('configPriceChair').value) || 0;
-            data.config.whatsapp = document.getElementById('configWhatsapp').value;
-            data.config.pixKey = document.getElementById('configPix').value;
-            data.config.welcomeMessage = document.getElementById('configWelcome').value;
-
-            saveData();
-            alert('Configurações salvas com sucesso!');
-            toggleSettings();
-        });
-
-        // Import Toggle
-        function toggleImport() {
-            const section = document.getElementById('importSection');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Process Import
-        function processImport() {
-            const text = document.getElementById('importText').value;
-            if (!text) return;
-
-            // Extract Name
-            const nameMatch = text.match(/👤 \*Cliente:\* (.*)/);
-            if (nameMatch) document.getElementById('clientName').value = nameMatch[1].trim();
-
-            // Extract Phone
-            const phoneMatch = text.match(/📱 \*Telefone:\* (.*)/);
-            if (phoneMatch) document.getElementById('clientPhone').value = phoneMatch[1].trim();
-
-            // Extract Address
-            const addressMatch = text.match(/📍 \*Endereço:\* (.*)/);
-            if (addressMatch) document.getElementById('clientAddress').value = addressMatch[1].trim();
-
-            // Extract Date
-            const dateMatch = text.match(/📅 \*Data do Evento:\* (.*)/);
-            if (dateMatch) {
-                const dateParts = dateMatch[1].trim().split('/');
-                if (dateParts.length === 3) {
-                    // Convert DD/MM/YYYY to YYYY-MM-DD
-                    const isoDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-                    document.getElementById('startDate').value = isoDate;
-                    document.getElementById('endDate').value = isoDate; // Default return same day
-                }
-            }
-
-            // Extract Items
-            const tablesMatch = text.match(/• Mesas: (\d+)/);
-            if (tablesMatch) document.getElementById('tableQty').value = tablesMatch[1];
-
-            const chairsMatch = text.match(/• Cadeiras: (\d+)/);
-            if (chairsMatch) document.getElementById('chairQty').value = chairsMatch[1];
-
-            // Extract Total
-            const totalMatch = text.match(/💰 \*Valor Total:\* R\$ ([\d,.]+)/);
-            if (totalMatch) {
-                const totalStr = totalMatch[1].replace('.', '').replace(',', '.');
-                document.getElementById('totalValue').value = parseFloat(totalStr);
-            }
-
-            // Extract Notes
-            const notesMatch = text.match(/📝 \*Observações:\* (.*)/);
-            if (notesMatch) document.getElementById('notes').value = notesMatch[1].trim();
-
-            toggleImport();
-            document.getElementById('importText').value = '';
-        }
-
-        // Set default start date to today
-        document.getElementById('startDate').valueAsDate = new Date();
+        loadConfig();
     </script>
 </body>
 

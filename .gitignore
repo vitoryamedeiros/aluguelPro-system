@@ -1,0 +1,10 @@
+@"
+# Backups
+*.backup
+
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+"@ | Out-File -FilePath .gitignore -Encoding UTF8
