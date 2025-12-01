@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Aluguel - Mesas e Cadeiras</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --accent-blue: #002bc5;
+            --accent-blue-dark: #2b72e5;
+            --accent-teal: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2d3a52;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 20% 0%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-value.orange {
+            color: var(--accent-blue);
+        }
+
+        .stat-value.teal {
+            color: var(--accent-teal);
+        }
+
+        .stat-value.success {
+            color: var(--success);
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Table Section */
+        .table-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 0 -28px;
+            padding: 0 28px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: rgba(255, 107, 53, 0.03);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.alugado {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .status-badge.devolvido {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .status-badge.atrasado {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .item-count {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-teal);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+        }
+
+        /* Inventory Config */
+        .inventory-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            margin-top: 24px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .inventory-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .inventory-item label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .inventory-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .inventory-controls button {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .inventory-controls button:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .inventory-controls span {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 50px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .filter-tabs {
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="stat-card fade-in">
+            <div class="stat-label">Aluguéis Ativos</div>
+            <div class="stat-value orange" id="statAtivos">0</div>
+        </div>
+        <div class="stat-card fade-in" style="animation-delay: 0.1s">
+            <div class="stat-label">Conjuntos Disponíveis</div>
+            <div class="stat-value teal" id="statDisponiveis">0</div>
+        </div>
+        <div class="stat-card fade-in" style="animation-delay: 0.2s">
+            <div class="stat-label">Faturamento do Mês</div>
+            <div class="stat-value success" id="statFaturamento">R$ 0</div>
+        </div>
+        <div class="stat-card fade-in" style="animation-delay: 0.3s">
+            <div class="stat-label">Total de Aluguéis</div>
+            <div class="stat-value" id="statTotal">0</div>
+        </div>
+    </div>
+
+    <!-- Settings Section (Hidden by default) -->
+    <div id="settingsSection" class="form-section fade-in"
+        style="display: none; margin-bottom: 32px; border-color: var(--accent-teal);">
+        <h2 class="section-title" style="color: var(--accent-teal);">⚙️ Configurações do Sistema</h2>
+        <form id="configForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Preço da Mesa (R$)</label>
+                    <input type="number" id="configPriceTable" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Preço da Cadeira (R$)</label>
+                    <input type="number" id="configPriceChair" step="0.01" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Cole
+                    a mensagem do WhatsApp aqui:</label>
+                    <textarea id="importText" rows="6"
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; margin-bottom: 12px;"></textarea>
+                    <button type="button" class="btn btn-primary" onclick="processImport()"
+                        style="width: 100%;">Processar
+                        Texto</button>
+                </div>
+                <form id="rentalForm">
+                    <div class="form-group">
+                        <label>Nome do Cliente *</label>
+                        <input type="text" id="clientName" placeholder="Ex: João Silva" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone *</label>
+                        <input type="tel" id="clientPhone" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço de Entrega</label>
+                        <input type="text" id="clientAddress" placeholder="Rua, número, bairro">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Qtd. Mesas</label>
+                            <input type="number" id="tableQty" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Qtd. Cadeiras</label>
+                            <input type="number" id="chairQty" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data de Retirada *</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Devolução *</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Valor Total (R$)</label>
+                            <input type="number" id="totalValue" min="0" step="0.01" placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="status">
+                                <option value="alugado">Alugado</option>
+                                <option value="devolvido">Devolvido</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Observações</label>
+                        <input type="text" id="notes" placeholder="Anotações adicionais...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        ✓ Registrar Aluguel
+                    </button>
+                </form>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section fade-in" style="animation-delay: 0.2s">
+                <div class="table-header">
+                    <h2 class="section-title">Aluguéis</h2>
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input type="text" id="searchInput" placeholder="Buscar cliente...">
+                    </div>
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Todos</button>
+                    <button class="filter-tab" data-filter="alugado">Ativos</button>
+                    <button class="filter-tab" data-filter="atrasado">Atrasados</button>
+                    <button class="filter-tab" data-filter="devolvido">Devolvidos</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Origem</th>
+                                <th>Cliente</th>
+                                <th>Itens</th>
+                                <th>Período</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rentalsTable">
+                        </tbody>
+                    </table>
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="8" width="18" height="12" rx="2" />
+                            <path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2" />
+                        </svg>
+                        <h3>Nenhum aluguel encontrado</h3>
+                        <p>Registre seu primeiro aluguel usando o formulário</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="inventory-section fade-in" style="animation-delay: 0.3s">
+        <h2 class="section-title">Estoque Total</h2>
+        <div class="inventory-grid">
+            <div class="inventory-item">
+                <label>Mesas no Estoque</label>
+                <div class="inventory-controls">
+                    <button onclick="updateInventory('tables', -1)">−</button>
+                    <span id="totalTables">20</span>
+                    <button onclick="updateInventory('tables', 1)">+</button>
+                </div>
+            </div>
+            <div class="inventory-item">
+                <label>Cadeiras no Estoque</label>
+                <div class="inventory-controls">
+                    <button onclick="updateInventory('chairs', -1)">−</button>
+                    <span id="totalChairs">80</span>
+                    <button onclick="updateInventory('chairs', 1)">+</button>
+                </div>
+            </div>
+            <div class="inventory-item">
+                <label>Mesas Alugadas</label>
+                <div class="inventory-controls">
+                    <span id="rentedTables" style="color: var(--warning)">0</span>
+                </div>
+            </div>
+            <div class="inventory-item">
+                <label>Cadeiras Alugadas</label>
+                <div class="inventory-controls">
+                    <span id="rentedChairs" style="color: var(--warning)">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <h3 class="modal-title">Editar Aluguel</h3>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Nome do Cliente</label>
+                    <input type="text" id="editClientName" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="editClientPhone" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Qtd. Mesas</label>
+                        <input type="number" id="editTableQty" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Qtd. Cadeiras</label>
+                        <input type="number" id="editChairQty" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data Retirada</label>
+                        <input type="date" id="editStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data Devolução</label>
+                        <input type="date" id="editEndDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Valor (R$)</label>
+                        <input type="number" id="editTotalValue" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="editStatus">
+                            <option value="alugado">Alugado</option>
+                            <option value="devolvido">Devolvido</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data Management
+        const STORAGE_KEY = 'aluguelPro_data';
+
+        let data = {
+            rentals: [],
+            inventory: {
+                tables: 20,
+                chairs: 80
+            },
+            prices: {
+                table: 15.00,
+                chair: 5.00
+            },
+            config: {
+                whatsapp: '',
+                pixKey: '',
+                welcomeMessage: ''
+            }
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                data = { ...data, ...parsed }; // Merge to ensure new fields exist
+
+                // Ensure deep merge for objects
+                if (parsed.inventory) data.inventory = { ...data.inventory, ...parsed.inventory };
+                if (parsed.prices) data.prices = { ...data.prices, ...parsed.prices };
+                if (parsed.config) data.config = { ...data.config, ...parsed.config };
+            }
+            updateUI();
+            loadConfigForm();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        // Generate unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        // Check if rental is overdue
+        function isOverdue(rental) {
+            if (rental.status === 'devolvido') return false;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const endDate = new Date(rental.endDate + 'T00:00:00');
+            return endDate < today;
+        }
+
+        // Get rental status
+        function getRentalStatus(rental) {
+            if (rental.status === 'devolvido') return 'devolvido';
+            if (isOverdue(rental)) return 'atrasado';
+            return 'alugado';
+        }
+
+        // Calculate stats
+        function calculateStats() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            let activeRentals = 0;
+            let monthRevenue = 0;
+            let rentedTables = 0;
+            let rentedChairs = 0;
+
+            data.rentals.forEach(rental => {
+                if (rental.status !== 'devolvido') {
+                    activeRentals++;
+                    rentedTables += rental.tableQty || 0;
+                    rentedChairs += rental.chairQty || 0;
+                }
+
+                const rentalDate = new Date(rental.startDate);
+                if (rentalDate.getMonth() === currentMonth &&
+                    rentalDate.getFullYear() === currentYear) {
+                    monthRevenue += rental.totalValue || 0;
+                }
+            });
+
+            const availableTables = data.inventory.tables - rentedTables;
+            const availableChairs = data.inventory.chairs - rentedChairs;
+
+            return {
+                activeRentals,
+                availableSets: Math.min(availableTables, Math.floor(availableChairs / 4)),
+                monthRevenue,
+                totalRentals: data.rentals.length,
+                rentedTables,
+                rentedChairs
+            };
+        }
+
+        // Update UI
+        function updateUI() {
+            const stats = calculateStats();
+
+            document.getElementById('statAtivos').textContent = stats.activeRentals;
+            document.getElementById('statDisponiveis').textContent = stats.availableSets;
+            document.getElementById('statFaturamento').textContent = formatCurrency(stats.monthRevenue);
+            document.getElementById('statTotal').textContent = stats.totalRentals;
+            document.getElementById('totalTables').textContent = data.inventory.tables;
+            document.getElementById('totalChairs').textContent = data.inventory.chairs;
+            document.getElementById('rentedTables').textContent = stats.rentedTables;
+            document.getElementById('rentedChairs').textContent = stats.rentedChairs;
+
+            renderTable();
+        }
+
+        // Render table
+        function renderTable(filter = 'all', search = '') {
+            const tbody = document.getElementById('rentalsTable');
+            const emptyState = document.getElementById('emptyState');
+
+            let filteredRentals = data.rentals.filter(rental => {
+                const status = getRentalStatus(rental);
+                const matchesFilter = filter === 'all' || status === filter;
+                const matchesSearch = rental.clientName.toLowerCase().includes(search.toLowerCase()) ||
+                    rental.clientPhone.includes(search);
+                return matchesFilter && matchesSearch;
+            });
+
+            // Sort by date (newest first)
+            filteredRentals.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+            if (filteredRentals.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            tbody.innerHTML = filteredRentals.map(rental => {
+                const status = getRentalStatus(rental);
+                const statusLabels = {
+                    'alugado': '⏳ Alugado',
+                    'devolvido': '✓ Devolvido',
+                    'atrasado': '⚠ Atrasado'
+                };
+
+                return `
+                    <tr>
+                        <td>
+                            ${rental.origin === 'web' ? '🌐 Web' : '👤 Manual'}
+                        </td>
+                        <td>
+                            <strong>${rental.clientName}</strong>
+                            <br><small style="color: var(--text-muted)">${rental.clientPhone}</small>
+                        </td>
+                        <td>
+                            <span class="item-count">${rental.tableQty || 0}</span> mesas
+                            <br>
+                            <span class="item-count">${rental.chairQty || 0}</span> cadeiras
+                        </td>
+                        <td>
+                            ${formatDate(rental.startDate)}
+                            <br><small style="color: var(--text-muted)">até ${formatDate(rental.endDate)}</small>
+                        </td>
+                        <td><strong>${formatCurrency(rental.totalValue || 0)}</strong></td>
+                        <td>
+                            <span class="status-badge ${status}">
+                                ${statusLabels[status]}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                ${status !== 'devolvido' ? `
+                                    <button class="btn btn-success" onclick="markReturned('${rental.id}')" title="Marcar como devolvido">
+                                        ✓
+                                    </button>
+                                ` : ''}
+                                <button class="btn btn-secondary" onclick="editRental('${rental.id}')" title="Editar">
+                                    ✎
+                                </button>
+                                <button class="btn btn-danger" onclick="deleteRental('${rental.id}')" title="Excluir">
+                                    ✕
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Add rental
+        document.getElementById('rentalForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const rental = {
+                id: generateId(),
+                clientName: document.getElementById('clientName').value,
+                clientPhone: document.getElementById('clientPhone').value,
+                clientAddress: document.getElementById('clientAddress').value,
+                tableQty: parseInt(document.getElementById('tableQty').value) || 0,
+                chairQty: parseInt(document.getElementById('chairQty').value) || 0,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                totalValue: parseFloat(document.getElementById('totalValue').value) || 0,
+                status: document.getElementById('status').value,
+                notes: document.getElementById('notes').value,
+                origin: 'manual',
+                createdAt: new Date().toISOString()
+            };
+
+            data.rentals.push(rental);
+            saveData();
+            updateUI();
+            this.reset();
+
+            // Set default dates
+            document.getElementById('startDate').valueAsDate = new Date();
+        });
+
+        // Edit rental
+        function editRental(id) {
+            const rental = data.rentals.find(r => r.id === id);
+            if (!rental) return;
+
+            document.getElementById('editId').value = rental.id;
+            document.getElementById('editClientName').value = rental.clientName;
+            document.getElementById('editClientPhone').value = rental.clientPhone;
+            document.getElementById('editTableQty').value = rental.tableQty;
+            document.getElementById('editChairQty').value = rental.chairQty;
+            document.getElementById('editStartDate').value = rental.startDate;
+            document.getElementById('editEndDate').value = rental.endDate;
+            document.getElementById('editTotalValue').value = rental.totalValue;
+            document.getElementById('editStatus').value = rental.status;
+
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        // Save edit
+        document.getElementById('editForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const id = document.getElementById('editId').value;
+            const index = data.rentals.findIndex(r => r.id === id);
+            if (index === -1) return;
+
+            data.rentals[index] = {
+                ...data.rentals[index],
+                clientName: document.getElementById('editClientName').value,
+                clientPhone: document.getElementById('editClientPhone').value,
+                tableQty: parseInt(document.getElementById('editTableQty').value) || 0,
+                chairQty: parseInt(document.getElementById('editChairQty').value) || 0,
+                startDate: document.getElementById('editStartDate').value,
+                endDate: document.getElementById('editEndDate').value,
+                totalValue: parseFloat(document.getElementById('editTotalValue').value) || 0,
+                status: document.getElementById('editStatus').value
+            };
+
+            saveData();
+            updateUI();
+            closeModal();
+        });
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        // Delete rental
+        function deleteRental(id) {
+            if (!confirm('Tem certeza que deseja excluir este aluguel?')) return;
+
+            data.rentals = data.rentals.filter(r => r.id !== id);
+            saveData();
+            updateUI();
+        }
+
+        // Mark as returned
+        function markReturned(id) {
+            const index = data.rentals.findIndex(r => r.id === id);
+            if (index === -1) return;
+
+            data.rentals[index].status = 'devolvido';
+            saveData();
+            updateUI();
+        }
+
+        // Update inventory
+        function updateInventory(type, delta) {
+            if (type === 'tables') {
+                data.inventory.tables = Math.max(0, data.inventory.tables + delta);
+            } else {
+                data.inventory.chairs = Math.max(0, data.inventory.chairs + delta);
+            }
+            saveData();
+            updateUI();
+        }
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                renderTable(this.dataset.filter, document.getElementById('searchInput').value);
+            });
+        });
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
+            renderTable(activeFilter, this.value);
+        });
+
+        // Phone mask
+        document.getElementById('clientPhone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 6) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+            } else if (value.length > 2) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value;
+        });
+
+        // Close modal on overlay click
+        document.getElementById('editModal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize
+        loadData();
+
+        // Settings Toggle
+        function toggleSettings() {
+            const section = document.getElementById('settingsSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Load Config Form
+        function loadConfigForm() {
+            document.getElementById('configPriceTable').value = data.prices.table;
+            document.getElementById('configPriceChair').value = data.prices.chair;
+            document.getElementById('configWhatsapp').value = data.config.whatsapp;
+            document.getElementById('configPix').value = data.config.pixKey;
+            document.getElementById('configWelcome').value = data.config.welcomeMessage;
+        }
+
+        // Save Config
+        document.getElementById('configForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            data.prices.table = parseFloat(document.getElementById('configPriceTable').value) || 0;
+            data.prices.chair = parseFloat(document.getElementById('configPriceChair').value) || 0;
+            data.config.whatsapp = document.getElementById('configWhatsapp').value;
+            data.config.pixKey = document.getElementById('configPix').value;
+            data.config.welcomeMessage = document.getElementById('configWelcome').value;
+
+            saveData();
+            alert('Configurações salvas com sucesso!');
+            toggleSettings();
+        });
+
+        // Import Toggle
+        function toggleImport() {
+            const section = document.getElementById('importSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Process Import
+        function processImport() {
+            const text = document.getElementById('importText').value;
+            if (!text) return;
+
+            // Extract Name
+            const nameMatch = text.match(/👤 \*Cliente:\* (.*)/);
+            if (nameMatch) document.getElementById('clientName').value = nameMatch[1].trim();
+
+            // Extract Phone
+            const phoneMatch = text.match(/📱 \*Telefone:\* (.*)/);
+            if (phoneMatch) document.getElementById('clientPhone').value = phoneMatch[1].trim();
+
+            // Extract Address
+            const addressMatch = text.match(/📍 \*Endereço:\* (.*)/);
+            if (addressMatch) document.getElementById('clientAddress').value = addressMatch[1].trim();
+
+            // Extract Date
+            const dateMatch = text.match(/📅 \*Data do Evento:\* (.*)/);
+            if (dateMatch) {
+                const dateParts = dateMatch[1].trim().split('/');
+                if (dateParts.length === 3) {
+                    // Convert DD/MM/YYYY to YYYY-MM-DD
+                    const isoDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+                    document.getElementById('startDate').value = isoDate;
+                    document.getElementById('endDate').value = isoDate; // Default return same day
+                }
+            }
+
+            // Extract Items
+            const tablesMatch = text.match(/• Mesas: (\d+)/);
+            if (tablesMatch) document.getElementById('tableQty').value = tablesMatch[1];
+
+            const chairsMatch = text.match(/• Cadeiras: (\d+)/);
+            if (chairsMatch) document.getElementById('chairQty').value = chairsMatch[1];
+
+            // Extract Total
+            const totalMatch = text.match(/💰 \*Valor Total:\* R\$ ([\d,.]+)/);
+            if (totalMatch) {
+                const totalStr = totalMatch[1].replace('.', '').replace(',', '.');
+                document.getElementById('totalValue').value = parseFloat(totalStr);
+            }
+
+            // Extract Notes
+            const notesMatch = text.match(/📝 \*Observações:\* (.*)/);
+            if (notesMatch) document.getElementById('notes').value = notesMatch[1].trim();
+
+            toggleImport();
+            document.getElementById('importText').value = '';
+        }
+
+        // Set default start date to today
+        document.getElementById('startDate').valueAsDate = new Date();
+    </script>
+</body>
+
+</html>
